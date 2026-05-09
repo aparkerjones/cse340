@@ -1,0 +1,16 @@
+<%- include("partials/header", { title }) %>
+<section>
+  <h1><%= heading %></h1>
+  <p><%= description %></p>
+  <img
+    src="/images/organization-team.svg"
+    alt="Illustration of volunteers collaborating"
+    class="org-image"
+  />
+  <ul class="item-list">
+    <% items.forEach((organization) => { %>
+      <li><%= organization %></li>
+    <% }) %>
+  </ul>
+</section>
+<%- include("partials/footer") %>

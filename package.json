@@ -1,0 +1,16 @@
+{
+  "name": "cse340-initial-site",
+  "version": "1.0.0",
+  "description": "Initial site scaffold for CSE 340 Week 1",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2"
+  }
+}
