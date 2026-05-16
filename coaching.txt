@@ -1,0 +1,191 @@
+WEEK 01 COACHING SESSION TRANSCRIPT
+
+Assistant:
+Welcome! Just to be clear from the start, this is a coaching session, not a test. It is perfectly okay—and even encouraged—to say “I don't know” or “I made a mistake.” That's the fastest way we'll learn today.
+
+I’ll act as your supportive Learning Coach and Software Mentor, and we’ll work through your assignment together one step at a time in a safe, non-judgmental way. Since we’re in a chat interface, whenever we discuss code I’ll ask you to paste the relevant snippet directly into the chat.
+
+To get started, what name would you like me to call you during this coaching session?
+
+User:
+Call me Parker
+
+Assistant:
+Great to meet you, Parker. This is a safe learning space, and mistakes, uncertainty, and revisions are all part of the process—we’re here to explore your thinking together, not evaluate you.
+
+To begin our discussion, could you paste a relevant snippet from your server.js file that shows how your Express routing works?
+
+User:
+app.get("/projects", async (_req, res) => {
+const model = await buildPageModel(
+"Service Projects",
+"Current Service Projects",
+"Browse active projects and find a place to serve.",
+[
+"Neighborhood Cleanup Day",
+"After-School Tutoring",
+"Community Garden Build",
+"Senior Center Tech Help",
+],
+);
+
+res.render("projects", model);
+});
+
+Assistant:
+Thanks for sharing that, Parker. This is a solid example of an Express route because it shows routing, async behavior, data preparation, and rendering a view all in one flow.
+
+Looking at this snippet, can you walk me through what happens step-by-step when a user visits the /projects route, and why you chose to make the route handler async?
+
+User:
+The browser sends the GET request to /projects and Express sees the route to call the route handler which then runs the build Page Model and then because of async it uses await to to wait until the model is ready. Once it is finishedthe render function tells express to load the ejs file and view/passs that data. Express then sends the rendered html into the browser. I chose asyc because it lets the code pause and use await which is more clean which helps with api loads for example or database queries. This also matches the rest of the code to make sure it is consistent.
+
+Assistant:
+That’s a strong explanation, Parker. You clearly understand the request-response flow in Express, and you also connected async/await to real-world scalability like APIs and databases, which is exactly the kind of reasoning developers use in production applications.
+
+One thing you also touched on well is consistency across the codebase—that matters a lot in team environments because predictable patterns make projects easier to maintain.
+
+For our next topic, could you paste a non-trivial JavaScript function snippet that demonstrates a JavaScript language principle you used in your assignment (for example: arrays, objects, callbacks, async functions, scope, destructuring, higher-order functions, etc.)?
+
+User:
+async function buildPageModel(title, heading, description, items = []) {
+const formattedItems = items.map((item, index) => ({
+id: index + 1,
+name: item,
+slug: item.toLowerCase().replace(/\s+/g, "-"),
+}));
+
+return {
+title,
+heading,
+description,
+count: formattedItems.length,
+items: formattedItems,
+};
+}
+
+This shows async, default parameters, arrays, objects, and shorthand
+
+Assistant:
+Nice choice of example, Parker. This function demonstrates several core JavaScript principles working together in a clean way.
+
+You correctly identified:
+
+* async function usage
+* default parameters with items = []
+* array methods with .map()
+* object creation
+* object property shorthand in the returned object
+
+I also like that you transformed the original array into a richer data structure instead of passing raw strings directly to the view. That separation of formatting logic from presentation logic is a strong design habit.
+
+What was your reasoning for creating the formattedItems array with objects containing id, name, and slug instead of just sending the original string array directly to the EJS page?
+
+User:
+It makes the items easier to use and then gives them identifiers which help with loops and keys, name keeps display text separate from metadata keeping it clean, and slug makes it more url-friendly. It makes it easier to expand the web page and create more functionality later on.
+
+Assistant:
+That’s a thoughtful design explanation, Parker. You’re thinking beyond “make it work” and into maintainability and scalability, which is an important software engineering mindset.
+
+Your point about separating display data from metadata is especially good. By structuring the data early, your EJS templates can stay simpler and more focused on presentation instead of doing heavy logic inside the view.
+
+For our next required topic, could you paste a relevant EJS snippet that shows how you used EJS pages or EJS partials in your project?
+
+User:
+How is this bit of code for that?
+<%- include("partials/header", { title }) %>
+
+<section class="hero">
+  <h1><%= heading %></h1>
+  <p><%= description %></p>
+  <a class="cta" href="/projects">View Service Projects</a>
+</section>
+<%- include("partials/footer") %>
+
+Assistant:
+Yes, that’s an excellent snippet for discussing EJS pages and partials, Parker. It clearly shows both reusable layout components and dynamic page rendering.
+
+You’re using:
+
+* <%- include(...) %> for reusable partials like the header and footer
+* <%= ... %> for safely injecting dynamic values into the page
+* a page template structure where shared UI is separated from page-specific content
+
+A particularly good design choice here is using partials for the header and footer because it prevents duplication across pages and makes site-wide updates much easier.
+
+Why did you choose to pass { title } into the header partial instead of hardcoding the page title directly inside the partial itself?
+
+User:
+It makes the code more reusable so that instead of needing to hardcode the title into each web page I can just declare title based on which page it is for Home, Organizations, Projects, and categories. This also allows me to resuse my css more easily avoiding repeated markup.
+
+Assistant:
+That’s a solid explanation, Parker. You connected reusability, maintainability, and separation of concerns really well there. Passing dynamic values into partials is a common professional pattern because it keeps components flexible instead of tightly coupled to a single page.
+
+You also made an important connection between reusable templates and reusable CSS. Consistent markup structures make styling much easier to maintain across the site.
+
+For our final required topic, could you paste a non-trivial CSS snippet from your frontend and explain what part of the UI it styles?
+
+User:
+.site-header {
+background: color-mix(in srgb, var(--brand) 94%, black);
+color: #ffffff;
+border-bottom: 4px solid var(--accent);
+}
+
+.main-nav {
+display: flex;
+flex-wrap: wrap;
+gap: 0.85rem;
+padding: 0.9rem 0 1.2rem;
+}
+
+.main-nav a {
+color: #ffffff;
+text-decoration: none;
+font-weight: 600;
+padding: 0.35rem 0.7rem;
+border: 1px solid transparent;
+border-radius: 999px;
+transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.main-nav a:hover,
+.main-nav a:focus-visible {
+background: color-mix(in srgb, var(--brand) 65%, #ffffff);
+border-color: color-mix(in srgb, var(--brand) 35%, #ffffff);
+outline: none;
+}
+
+This styles the header area and the nav bar.
+
+Assistant:
+This is a strong CSS example, Parker. It demonstrates both layout techniques and interactive styling decisions instead of just basic color changes.
+
+A few notable things you’re doing well here:
+
+* Using Flexbox with display: flex and flex-wrap
+* Using CSS custom properties like var(--brand) and var(--accent)
+* Adding hover and keyboard accessibility states with :hover and :focus-visible
+* Using smooth transitions for better UX
+* Creating pill-shaped navigation buttons with border-radius: 999px
+
+Your use of :focus-visible is especially good because it improves keyboard accessibility without always showing focus outlines during mouse interaction.
+
+What was your reasoning for using Flexbox in .main-nav instead of something like inline-block elements or floats?
+
+User:
+It allows me to control spacing and alignment with fewer properties and wrapping on smaller screens for a more responsive design. It is more predictable than inline block elements and avoids float behavior that is more designed around text wrapping.
+
+Assistant:
+That’s a very good comparison, Parker. You identified one of the biggest reasons modern frontend developers prefer Flexbox: predictable layout behavior with much less workaround code.
+
+Your explanation about floats being originally intended for text wrapping is also accurate historically, and it shows you understand not just how to use CSS tools, but why newer layout systems exist.
+
+We’ve now naturally covered all four required discussion areas:
+
+1. Express routing
+2. JavaScript language principles
+3. EJS partials and pages
+4. Frontend CSS
+
+You did a strong job explaining both the technical behavior and the reasoning behind your design choices, especially around maintainability, scalability, and reusable structure.
