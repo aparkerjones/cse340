@@ -4,7 +4,18 @@
   <p><%= description %></p>
   <ul class="item-list">
     <% items.forEach((project) => { %>
-      <li><%= project %></li>
+      <li>
+        <strong>
+          <%= new Date(project.project_date).toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          }) %>:
+        </strong>
+        <%= project.title %> (<%= project.organization_name %>)
+        <br />
+        <span><%= project.location %></span>
+      </li>
     <% }) %>
   </ul>
 </section>
