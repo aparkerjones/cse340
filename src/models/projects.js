@@ -25,7 +25,7 @@ export const getUpcomingProjects = async (limit = 5) => {
 };
 
 // Backward-compatible alias for earlier naming
-export const getAllProjects = getUpcomingProjects;
+export const getAllProjects = async (limit = 5) => getUpcomingProjects(limit);
 
 // Retrieve one project and its sponsoring organization
 export const getProjectDetails = async (projectId) => {
@@ -50,7 +50,7 @@ export const getProjectDetails = async (projectId) => {
 };
 
 // Backward-compatible alias for earlier naming
-export const getProjectById = getProjectDetails;
+export const getProjectById = async (projectId) => getProjectDetails(projectId);
 
 // Retrieve all categories assigned to one project
 export const getCategoriesByProjectId = async (projectId) => {
