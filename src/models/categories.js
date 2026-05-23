@@ -1,7 +1,7 @@
 import { query } from "../database/index.js";
 
 // Retrieve all service project categories
-export async function getAllCategories() {
+export const getAllCategories = async () => {
   const sql = `
     SELECT category_id, category_name
     FROM categories
@@ -10,4 +10,4 @@ export async function getAllCategories() {
 
   const result = await query(sql);
   return result.rows;
-}
+};

@@ -2,15 +2,22 @@
 <section>
   <h1><%= heading %></h1>
   <p><%= description %></p>
-  <img
-    src="/images/organization-team.svg"
-    alt="Illustration of volunteers collaborating"
-    class="org-image"
-  />
-  <ul class="item-list">
+  <div class="org-grid">
     <% items.forEach((organization) => { %>
-      <li><%= organization %></li>
+      <article class="org-card">
+        <img
+          src="/images/<%= organization.logo_filename %>"
+          alt="<%= organization.organization_name %> logo"
+          class="org-image"
+        />
+        <h2><%= organization.organization_name %></h2>
+        <p><strong>Email:</strong> <a href="mailto:<%= organization.contact_email %>"><%= organization.contact_email %></a></p>
+        <p><%= organization.description %></p>
+        <% if (organization.website_url) { %>
+          <p><a href="<%= organization.website_url %>" target="_blank" rel="noreferrer">Visit website</a></p>
+        <% } %>
+      </article>
     <% }) %>
-  </ul>
+  </div>
 </section>
 <%- include("partials/footer") %>

@@ -116,11 +116,36 @@ h1 {
   font-weight: 700;
 }
 
+.org-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.org-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 1rem;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfcf7 100%);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.org-card h2 {
+  margin: 0.9rem 0 0.45rem;
+  font-size: 1.1rem;
+}
+
+.org-card p {
+  margin: 0.4rem 0 0;
+}
+
 .org-image {
   display: block;
-  width: min(100%, 520px);
+  width: 100%;
   height: auto;
-  margin-top: 1rem;
+  max-height: 160px;
+  object-fit: contain;
   border-radius: 12px;
   border: 1px solid var(--line);
 }

@@ -1,7 +1,7 @@
 import { query } from "../database/index.js";
 
 // Retrieve all projects with their sponsoring organization
-export async function getAllProjects() {
+export const getAllProjects = async () => {
   const sql = `
     SELECT
       p.project_id,
@@ -18,4 +18,4 @@ export async function getAllProjects() {
 
   const result = await query(sql);
   return result.rows;
-}
+};

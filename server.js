@@ -45,7 +45,7 @@ app.get("/organizations", asyncHandler(async (_req, res) => {
     "Organizations",
     "Partner Organizations",
     "These are the organizations that support our service opportunities.",
-    organizations.map((organization) => organization.organization_name),
+    organizations,
   );
 
   res.render("organizations", model);
