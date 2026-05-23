@@ -1,0 +1,73 @@
+Week 03 Coaching Session Transcript
+
+Assistant: Welcome! Just to be clear from the start, this is a coaching session, not a test. It is perfectly okay—and even encouraged—to say "I don't know" or "I made a mistake." That's the fastest way we'll learn today.
+Assistant: What name would you like me to use during this coaching session?
+
+User: Parker
+
+Assistant: Could you paste a non-trivial model function from your project that accepts a parameter and uses it in an SQL query?
+
+User:
+export async function getProjectDetails(projectId) {
+  const sql = `... WHERE p.project_id = $1;`;
+  const result = await query(sql, [projectId]);
+  return result.rows[0] ?? null;
+}
+
+Assistant: Can you explain what the JOIN line does and why you chose to use a JOIN instead of running a separate query?
+
+User: Fewer overall queries which is usually faster and makes the app logic simpler
+
+Assistant: Why do you think the query uses $1 and [projectId] instead of building the SQL string directly?
+
+User: The first option is parameterized which is safer. It protects from sql injection and keeps the code more reusable and clean.
+
+Assistant: Could you paste a non-trivial EJS snippet from one of your views that inserts data into a link?
+
+User:
+<% items.forEach((project) => { %>
+  <li>
+    <strong>
+      <a href="/project/<%= project.project_id %>"><%= project.title %></a>
+    </strong>
+    ...
+  </li>
+<% }) %>
+
+Assistant: Can you explain what the difference is between <% ... %> and <%= ... %> in EJS?
+
+User: The first is for javascript and it does not print anything into html output. The second evaluates an expression and prints to HTML.
+
+Assistant: Could you paste a controller route handler that includes a route parameter?
+
+User:
+export async function getProjectDetailsPage(req, res) {
+  const projectId = Number(req.params.id);
+  ...
+}
+
+Assistant: Why did you choose to convert req.params.id with Number(req.params.id)?
+
+User: req.params.id arrives as a string not a numbe and so it had to be converted to make the type explicit before being passed to the function.
+
+Assistant: Could you paste a code snippet that shows your application's error-handling strategy?
+
+User:
+app.use((_req, res) => {
+  res.status(404).render("404", ...);
+});
+
+app.use((error, _req, res, _next) => {
+  console.error(error);
+  res.status(500).render("500", ...);
+});
+
+Assistant: Looking back at your project as a whole, what part of the application or assignment do you feel least confident explaining to an instructor?
+
+User: My error handler which gives the 500 error
+
+Assistant: If getProjectDetails(projectId) were to throw an exception because the database connection failed, how do errors get from that controller to your global 500 error handler?
+
+User: asyncHandler turns the failures into an express middlware error. This is how the 500 handler receives the exceptions automatically.
+
+Assistant: Session complete.
