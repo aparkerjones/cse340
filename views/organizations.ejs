@@ -2,20 +2,20 @@
 <section>
   <h1><%= heading %></h1>
   <p><%= description %></p>
+  <p>Here are a few of our partner organizations:</p>
 
-  <div class="organization-grid" aria-label="Featured organizations">
+  <ul class="organization-grid" aria-label="Featured organizations">
     <% organizationProfiles.forEach((organization) => { %>
-      <article class="organization-card">
+      <li class="organization-card">
         <img
           src="<%= organization.image %>"
           alt="<%= organization.alt %>"
           class="org-logo"
         />
-        <h2><%= organization.name %></h2>
-        <p><%= organization.summary %></p>
-      </article>
+        <p><strong><%= organization.name %></strong>: <%= organization.contact %></p>
+      </li>
     <% }) %>
-  </div>
+  </ul>
 
   <img
     src="/images/organization-team.svg"

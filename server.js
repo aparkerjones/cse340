@@ -33,13 +33,13 @@ const buildPageModel = async (title, heading, description, items = [], extra = {
 app.get("/", asyncHandler(async (_req, res) => {
   const model = await buildPageModel(
     "Home",
-    "CSE 340 Service Portal",
-    "Welcome to the home page for organizations and service projects.",
+    "Welcome to the CSE 340 Service Network!",
+    "Our mission is to promote service across the world by connecting volunteers with service opportunities in their community.",
     [],
     {
       homeImage: {
         src: "/images/cse340-service-network.png",
-        alt: "Connected volunteers, organizations, and service opportunities",
+        alt: "CSE 340 Service Network Logo",
       },
     },
   );
@@ -52,22 +52,22 @@ app.get("/organizations", asyncHandler(async (_req, res) => {
 
   const organizationProfiles = [
     {
-      name: "Bright Future",
+      name: "BrightFuture Builders",
       image: "/images/brightfuture-logo.png",
-      alt: "Bright Future organization logo",
-      summary: "Supports youth mentoring, tutoring, and leadership opportunities for students and families.",
+      alt: "BrightFuture Builders logo",
+      contact: "info@brightfuture.org",
     },
     {
-      name: "Green Harvest",
+      name: "GreenHarvest Growers",
       image: "/images/greenharvest-logo.png",
-      alt: "Green Harvest organization logo",
-      summary: "Coordinates food security and sustainability projects such as produce drives and community gardens.",
+      alt: "GreenHarvest Growers logo",
+      contact: "contact@greenharvest.org",
     },
     {
-      name: "Unity Serve",
+      name: "UnityServe Volunteers",
       image: "/images/unityserve-logo.png",
-      alt: "Unity Serve organization logo",
-      summary: "Connects volunteers with local service efforts focused on neighborhood support and community outreach.",
+      alt: "UnityServe Volunteers logo",
+      contact: "hello@unityserve.org",
     },
   ];
 

@@ -115,6 +115,8 @@ h1 {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1rem;
   margin-top: 1rem;
+  list-style: none;
+  padding: 0;
 }
 
 .organization-card {
