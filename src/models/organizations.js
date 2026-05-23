@@ -11,3 +11,32 @@ export const getAllOrganizations = async () => {
   const result = await query(sql);
   return result.rows;
 };
+
+// Retrieve one organization by ID
+export const getOrganizationById = async (organizationId) => {
+  const sql = `
+    SELECT organization_id, organization_name, logo_filename, contact_email, description, website_url
+    FROM organizations
+    WHERE organization_id = $1;
+  `;
+
+  const result = await query(sql, [organizationId]);
+  return result.rows[0] ?? null;
+};
+
+// Retrieve all projects for one organization
+export const getProjectsByOrganizationId = async (organizationId) => {
+  const sql = `
+    SELECT
+      project_id,
+      title,
+      location,
+      project_date
+    FROM projects
+    WHERE organization_id = $1
+    ORDER BY project_date, title;
+  `;
+
+  const result = await query(sql, [organizationId]);
+  return result.rows;
+};
