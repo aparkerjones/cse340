@@ -1,14 +1,16 @@
 import {
   getCategoriesByProjectId,
-  getProjectById,
+  getProjectDetails,
   getUpcomingProjects,
 } from "../models/projects.js";
 
+const NUMBER_OF_UPCOMING_PROJECTS = 5;
+
 export async function getProjectsPage(_req, res) {
-  const projects = await getUpcomingProjects(5);
+  const projects = await getUpcomingProjects(NUMBER_OF_UPCOMING_PROJECTS);
 
   res.render("projects", {
-    title: "Service Projects",
+    title: "Upcoming Service Projects",
     heading: "Next Five Upcoming Service Projects",
     description:
       "These are the next upcoming opportunities. Select a project for full details.",
@@ -18,7 +20,7 @@ export async function getProjectsPage(_req, res) {
 
 export async function getProjectDetailsPage(req, res) {
   const projectId = Number(req.params.id);
-  const project = await getProjectById(projectId);
+  const project = await getProjectDetails(projectId);
 
   if (!project) {
     res.status(404).render("404", {

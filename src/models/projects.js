@@ -9,11 +9,13 @@ export async function getUpcomingProjects(limit = 5) {
       p.description,
       p.location,
       p.project_date,
+      p.project_date AS date,
       o.organization_id,
       o.organization_name
     FROM projects p
     JOIN organizations o
       ON p.organization_id = o.organization_id
+    WHERE p.project_date >= CURRENT_DATE
     ORDER BY p.project_date, p.title
     LIMIT $1;
   `;
@@ -23,7 +25,7 @@ export async function getUpcomingProjects(limit = 5) {
 }
 
 // Retrieve one project and its sponsoring organization
-export async function getProjectById(projectId) {
+export async function getProjectDetails(projectId) {
   const sql = `
     SELECT
       p.project_id,
@@ -31,6 +33,7 @@ export async function getProjectById(projectId) {
       p.description,
       p.location,
       p.project_date,
+      p.project_date AS date,
       o.organization_id,
       o.organization_name
     FROM projects p
@@ -42,6 +45,9 @@ export async function getProjectById(projectId) {
   const result = await query(sql, [projectId]);
   return result.rows[0] ?? null;
 }
+
+// Backward-compatible alias for earlier naming
+export const getProjectById = getProjectDetails;
 
 // Retrieve all categories assigned to one project
 export async function getCategoriesByProjectId(projectId) {
