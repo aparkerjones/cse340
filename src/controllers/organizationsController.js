@@ -10,7 +10,7 @@ export async function getOrganizationsPage(_req, res) {
   res.render("organizations", {
     title: "Organizations",
     heading: "Partner Organizations",
-    description: "Select an organization to view details and current projects.",
+    description: "Meet the partner organizations helping make service opportunities happen.",
     items: organizations,
   });
 }

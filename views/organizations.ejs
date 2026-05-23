@@ -13,7 +13,7 @@
         <h2>
           <a href="/organization/<%= organization.organization_id %>"><%= organization.organization_name %></a>
         </h2>
-        <p><strong>Email:</strong> <a href="mailto:<%= organization.contact_email %>"><%= organization.contact_email %></a></p>
+        <p><strong>Contact:</strong> <a href="mailto:<%= organization.contact_email %>"><%= organization.contact_email %></a></p>
         <p><%= organization.description %></p>
         <% if (organization.website_url) { %>
           <p><a href="<%= organization.website_url %>" target="_blank" rel="noreferrer noopener">Visit website</a></p>

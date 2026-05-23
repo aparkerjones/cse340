@@ -84,6 +84,16 @@ h1 {
   line-height: 1.22;
 }
 
+.hero p,
+section > p {
+  line-height: 1.6;
+}
+
+.hero-note {
+  margin-top: 0.65rem;
+  color: #4a534a;
+}
+
 .cta {
   display: inline-block;
   margin-top: 0.8rem;
