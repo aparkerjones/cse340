@@ -2,6 +2,11 @@
 <section class="hero">
   <h1><%= heading %></h1>
   <p><%= description %></p>
+  <img
+    src="<%= homeImage.src %>"
+    alt="<%= homeImage.alt %>"
+    class="home-image"
+  />
   <a class="cta" href="/projects">View Service Projects</a>
 </section>
 <%- include("partials/footer") %>

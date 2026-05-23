@@ -22,11 +22,12 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 
 // Build a consistent page model for rendering
-const buildPageModel = async (title, heading, description, items = []) => ({
+const buildPageModel = async (title, heading, description, items = [], extra = {}) => ({
   title,
   heading,
   description,
   items,
+  ...extra,
 });
 
 app.get("/", asyncHandler(async (_req, res) => {
@@ -34,6 +35,13 @@ app.get("/", asyncHandler(async (_req, res) => {
     "Home",
     "CSE 340 Service Portal",
     "Welcome to the home page for organizations and service projects.",
+    [],
+    {
+      homeImage: {
+        src: "/images/cse340-service-network.png",
+        alt: "Connected volunteers, organizations, and service opportunities",
+      },
+    },
   );
 
   res.render("index", model);
@@ -41,11 +49,36 @@ app.get("/", asyncHandler(async (_req, res) => {
 
 app.get("/organizations", asyncHandler(async (_req, res) => {
   const organizations = await getAllOrganizations();
+
+  const organizationProfiles = [
+    {
+      name: "Bright Future",
+      image: "/images/brightfuture-logo.png",
+      alt: "Bright Future organization logo",
+      summary: "Supports youth mentoring, tutoring, and leadership opportunities for students and families.",
+    },
+    {
+      name: "Green Harvest",
+      image: "/images/greenharvest-logo.png",
+      alt: "Green Harvest organization logo",
+      summary: "Coordinates food security and sustainability projects such as produce drives and community gardens.",
+    },
+    {
+      name: "Unity Serve",
+      image: "/images/unityserve-logo.png",
+      alt: "Unity Serve organization logo",
+      summary: "Connects volunteers with local service efforts focused on neighborhood support and community outreach.",
+    },
+  ];
+
   const model = await buildPageModel(
     "Organizations",
     "Partner Organizations",
     "These are the organizations that support our service opportunities.",
     organizations.map((organization) => organization.organization_name),
+    {
+      organizationProfiles,
+    },
   );
 
   res.render("organizations", model);

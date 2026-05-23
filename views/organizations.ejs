@@ -2,11 +2,28 @@
 <section>
   <h1><%= heading %></h1>
   <p><%= description %></p>
+
+  <div class="organization-grid" aria-label="Featured organizations">
+    <% organizationProfiles.forEach((organization) => { %>
+      <article class="organization-card">
+        <img
+          src="<%= organization.image %>"
+          alt="<%= organization.alt %>"
+          class="org-logo"
+        />
+        <h2><%= organization.name %></h2>
+        <p><%= organization.summary %></p>
+      </article>
+    <% }) %>
+  </div>
+
   <img
     src="/images/organization-team.svg"
     alt="Illustration of volunteers collaborating"
     class="org-image"
   />
+
+  <h2>Organization Names in Database</h2>
   <ul class="item-list">
     <% items.forEach((organization) => { %>
       <li><%= organization %></li>
