@@ -6,6 +6,8 @@ DROP TABLE IF EXISTS organizations;
 CREATE TABLE organizations (
   organization_id SERIAL PRIMARY KEY,
   organization_name VARCHAR(100) NOT NULL UNIQUE,
+  logo_filename VARCHAR(255) NOT NULL,
+  contact_email VARCHAR(255) NOT NULL,
   description TEXT NOT NULL,
   website_url VARCHAR(255)
 );
@@ -30,11 +32,11 @@ CREATE TABLE project_categories (
   PRIMARY KEY (project_id, category_id)
 );
 
-INSERT INTO organizations (organization_id, organization_name, description, website_url)
+INSERT INTO organizations (organization_id, organization_name, logo_filename, contact_email, description, website_url)
 VALUES
-  (1, 'Habitat for Humanity', 'Coordinates volunteers to build and repair affordable housing in the community.', 'https://www.habitat.org/'),
-  (2, 'Local Food Bank', 'Organizes food collection, sorting, and distribution for families in need.', 'https://www.feedingamerica.org/'),
-  (3, 'Boys & Girls Club', 'Provides after-school support programs, mentoring, and safe recreation spaces.', 'https://www.bgca.org/');
+  (1, 'BrightFuture Builders', 'brightfuture-logo.png', 'info@brightfuturebuilders.org', 'A nonprofit focused on improving community infrastructure through sustainable construction projects.', NULL),
+  (2, 'GreenHarvest Growers', 'greenharvest-logo.png', 'contact@greenharvest.org', 'An urban farming collective promoting food sustainability and education in local neighborhoods.', NULL),
+  (3, 'UnityServe Volunteers', 'unityserve-logo.png', 'hello@unityserve.org', 'A volunteer coordination group supporting local charities and service initiatives.', NULL);
 
 INSERT INTO projects (project_id, organization_id, title, description, location, project_date)
 VALUES

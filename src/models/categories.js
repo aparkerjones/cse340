@@ -1,7 +1,7 @@
 import { query } from "../database/index.js";
 
 // Retrieve all service project categories
-export async function getAllCategories() {
+export const getAllCategories = async () => {
   const sql = `
     SELECT category_id, category_name
     FROM categories
@@ -10,10 +10,10 @@ export async function getAllCategories() {
 
   const result = await query(sql);
   return result.rows;
-}
+};
 
 // Retrieve one category by ID
-export async function getCategoryById(categoryId) {
+export const getCategoryById = async (categoryId) => {
   const sql = `
     SELECT category_id, category_name
     FROM categories
@@ -22,10 +22,10 @@ export async function getCategoryById(categoryId) {
 
   const result = await query(sql, [categoryId]);
   return result.rows[0] ?? null;
-}
+};
 
 // Retrieve all projects associated with one category
-export async function getProjectsByCategoryId(categoryId) {
+export const getProjectsByCategoryId = async (categoryId) => {
   const sql = `
     SELECT
       p.project_id,
@@ -41,7 +41,7 @@ export async function getProjectsByCategoryId(categoryId) {
 
   const result = await query(sql, [categoryId]);
   return result.rows;
-}
+};
 
 async function assignCategoryToProject(projectId, categoryId) {
   const sql = `

@@ -3,10 +3,10 @@ export function getHomePage(_req, res) {
     title: "Home",
     heading: "Welcome to the CSE 340 Service Network!",
     description:
-      "Our mission is to promote service across the world by connecting volunteers with service opportunities in their community.",
+      "We connect volunteers with local organizations that need a helping hand.",
     homeImage: {
       src: "/images/cse340-service-network.png",
-      alt: "CSE 340 Service Network Logo",
+      alt: "Illustration for the CSE 340 Service Network",
     },
   });
 }

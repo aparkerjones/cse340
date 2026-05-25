@@ -84,6 +84,16 @@ h1 {
   line-height: 1.22;
 }
 
+.hero p,
+section > p {
+  line-height: 1.6;
+}
+
+.hero-note {
+  margin-top: 0.65rem;
+  color: #4a534a;
+}
+
 .cta {
   display: inline-block;
   margin-top: 0.8rem;
@@ -99,48 +109,6 @@ h1 {
 .cta:focus-visible {
   background: color-mix(in srgb, var(--brand) 82%, black);
   outline: none;
-}
-
-.home-image {
-  display: block;
-  width: min(100%, 620px);
-  height: auto;
-  margin-top: 1rem;
-  border-radius: 12px;
-  border: 1px solid var(--line);
-}
-
-.organization-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
-  margin-top: 1rem;
-  list-style: none;
-  padding: 0;
-}
-
-.organization-card {
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 1rem;
-  background: #ffffff;
-}
-
-.organization-card h2 {
-  margin: 0.85rem 0 0.45rem;
-  font-size: 1.15rem;
-}
-
-.organization-card p {
-  margin: 0;
-}
-
-.org-logo {
-  width: 100%;
-  max-width: 230px;
-  height: auto;
-  display: block;
-  margin-inline: auto;
 }
 
 .item-list {
@@ -168,6 +136,40 @@ h1 {
   font-weight: 700;
 }
 
+.org-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.org-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 1rem;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfcf7 100%);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.org-card h2 {
+  margin: 0.9rem 0 0.45rem;
+  font-size: 1.1rem;
+}
+
+.org-card p {
+  margin: 0.4rem 0 0;
+}
+
+.org-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 160px;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+}
+
 .tag-list {
   display: flex;
   flex-wrap: wrap;
@@ -189,15 +191,6 @@ h1 {
 .tag:focus-visible {
   background: #d8e9a7;
   outline: none;
-}
-
-.org-image {
-  display: block;
-  width: min(100%, 520px);
-  height: auto;
-  margin-top: 1rem;
-  border-radius: 12px;
-  border: 1px solid var(--line);
 }
 
 .site-footer {

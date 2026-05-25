@@ -37,14 +37,6 @@ app.use(organizationsRoutes);
 app.use(projectsRoutes);
 app.use(categoriesRoutes);
 
-app.use((_req, res) => {
-  res.status(404).render("404", {
-    title: "Not Found",
-    heading: "Page Not Found",
-    message: "The page you requested does not exist.",
-  });
-});
-
 // Global error handler for async route failures
 app.use((error, _req, res, _next) => {
   console.error(error);
@@ -52,6 +44,14 @@ app.use((error, _req, res, _next) => {
     title: "Server Error",
     heading: "Something Went Wrong",
     message: "A server error occurred while loading the requested page.",
+  });
+});
+
+app.use((_req, res) => {
+  res.status(404).render("404", {
+    title: "Not Found",
+    heading: "Page Not Found",
+    message: "The page you requested does not exist.",
   });
 });
 

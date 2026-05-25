@@ -1,7 +1,7 @@
 import { query } from "../database/index.js";
 
-// Retrieve upcoming projects with sponsoring organization
-export async function getUpcomingProjects(limit = 5) {
+// Retrieve all projects with their sponsoring organization
+export const getUpcomingProjects = async (limit = 5) => {
   const sql = `
     SELECT
       p.project_id,
@@ -22,10 +22,13 @@ export async function getUpcomingProjects(limit = 5) {
 
   const result = await query(sql, [limit]);
   return result.rows;
-}
+};
+
+// Backward-compatible alias for earlier naming
+export const getAllProjects = async (limit = 5) => getUpcomingProjects(limit);
 
 // Retrieve one project and its sponsoring organization
-export async function getProjectDetails(projectId) {
+export const getProjectDetails = async (projectId) => {
   const sql = `
     SELECT
       p.project_id,
@@ -44,13 +47,13 @@ export async function getProjectDetails(projectId) {
 
   const result = await query(sql, [projectId]);
   return result.rows[0] ?? null;
-}
+};
 
 // Backward-compatible alias for earlier naming
-export const getProjectById = getProjectDetails;
+export const getProjectById = async (projectId) => getProjectDetails(projectId);
 
 // Retrieve all categories assigned to one project
-export async function getCategoriesByProjectId(projectId) {
+export const getCategoriesByProjectId = async (projectId) => {
   const sql = `
     SELECT c.category_id, c.category_name
     FROM categories c
@@ -62,10 +65,10 @@ export async function getCategoriesByProjectId(projectId) {
 
   const result = await query(sql, [projectId]);
   return result.rows;
-}
+};
 
 // Create a new service project
-export async function createProject(
+export const createProject = async (
   title,
   description,
   location,
@@ -80,4 +83,4 @@ export async function createProject(
 
   const result = await query(sql, [organizationId, title, description, location, date]);
   return result.rows[0]?.project_id ?? null;
-}
+};
