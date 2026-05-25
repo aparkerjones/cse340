@@ -18,8 +18,8 @@ const pool = new Pool({
   ssl: sslEnabled ? { rejectUnauthorized: false } : false,
 });
 
-export async function query(text, params = []) {
+export const query = async (text, params = []) => {
   return pool.query(text, params);
-}
+};
 
 export default pool;

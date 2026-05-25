@@ -52,7 +52,7 @@ const assignCategoryToProject = async (projectId, categoryId) => {
   await query(sql, [projectId, categoryId]);
 };
 
-export async function updateCategoryAssignments(projectId, categoryIds) {
+export const updateCategoryAssignments = async (projectId, categoryIds) => {
   const deleteSql = `
     DELETE FROM project_categories
     WHERE project_id = $1;
@@ -63,4 +63,4 @@ export async function updateCategoryAssignments(projectId, categoryIds) {
   for (const categoryId of categoryIds) {
     await assignCategoryToProject(projectId, Number(categoryId));
   }
-}
+};
