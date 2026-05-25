@@ -43,7 +43,7 @@ export const projectValidation = [
     .withMessage("Please choose a valid organization"),
 ];
 
-export async function getProjectsPage(_req, res) {
+export const getProjectsPage = async (_req, res) => {
   const projects = await getUpcomingProjects(NUMBER_OF_UPCOMING_PROJECTS);
 
   res.render("projects", {
@@ -53,9 +53,9 @@ export async function getProjectsPage(_req, res) {
       "These are the next upcoming opportunities. Select a project for full details.",
     items: projects,
   });
-}
+};
 
-export async function getProjectDetailsPage(req, res) {
+export const getProjectDetailsPage = async (req, res) => {
   const projectId = Number(req.params.id);
   const project = await getProjectDetails(projectId);
 
@@ -76,18 +76,18 @@ export async function getProjectDetailsPage(req, res) {
     project,
     categories,
   });
-}
+};
 
-export async function showNewProjectForm(_req, res) {
+export const showNewProjectForm = async (_req, res) => {
   const organizations = await getAllOrganizations();
 
   res.render("new-project", {
     title: "Add New Service Project",
     organizations,
   });
-}
+};
 
-export async function processNewProjectForm(req, res) {
+export const processNewProjectForm = async (req, res) => {
   const results = validationResult(req);
   if (!results.isEmpty()) {
     results.array().forEach((error) => {
@@ -100,4 +100,4 @@ export async function processNewProjectForm(req, res) {
   await createProject(title, description, location, date, Number(organizationId));
   req.flash("success", "Service project added successfully!");
   res.redirect("/projects");
-}
+};

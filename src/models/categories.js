@@ -43,14 +43,14 @@ export const getProjectsByCategoryId = async (categoryId) => {
   return result.rows;
 };
 
-async function assignCategoryToProject(projectId, categoryId) {
+const assignCategoryToProject = async (projectId, categoryId) => {
   const sql = `
     INSERT INTO project_categories (project_id, category_id)
     VALUES ($1, $2);
   `;
 
   await query(sql, [projectId, categoryId]);
-}
+};
 
 export async function updateCategoryAssignments(projectId, categoryIds) {
   const deleteSql = `

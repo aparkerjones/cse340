@@ -30,7 +30,7 @@ export const organizationValidation = [
     .withMessage("Please provide a valid URL"),
 ];
 
-export async function getOrganizationsPage(_req, res) {
+export const getOrganizationsPage = async (_req, res) => {
   const organizations = await getAllOrganizations();
 
   res.render("organizations", {
@@ -39,9 +39,9 @@ export async function getOrganizationsPage(_req, res) {
     description: "Meet the partner organizations helping make service opportunities happen.",
     items: organizations,
   });
-}
+};
 
-export async function getOrganizationDetailsPage(req, res) {
+export const getOrganizationDetailsPage = async (req, res) => {
   const organizationId = Number(req.params.id);
   const organization = await getOrganizationById(organizationId);
 
@@ -62,15 +62,15 @@ export async function getOrganizationDetailsPage(req, res) {
     organization,
     projects,
   });
-}
+};
 
-export async function showNewOrganizationForm(_req, res) {
+export const showNewOrganizationForm = async (_req, res) => {
   res.render("new-organization", {
     title: "Add New Organization",
   });
-}
+};
 
-export async function processNewOrganizationForm(req, res) {
+export const processNewOrganizationForm = async (req, res) => {
   const results = validationResult(req);
   if (!results.isEmpty()) {
     results.array().forEach((error) => {
@@ -83,9 +83,9 @@ export async function processNewOrganizationForm(req, res) {
   const organizationId = await createOrganization(name, description, websiteUrl);
   req.flash("success", "Organization added successfully!");
   res.redirect(`/organization/${organizationId}`);
-}
+};
 
-export async function showEditOrganizationForm(req, res) {
+export const showEditOrganizationForm = async (req, res) => {
   const organizationId = Number(req.params.id);
   const organizationDetails = await getOrganizationById(organizationId);
 
@@ -102,9 +102,9 @@ export async function showEditOrganizationForm(req, res) {
     title: `Edit ${organizationDetails.organization_name}`,
     organizationDetails,
   });
-}
+};
 
-export async function processEditOrganizationForm(req, res) {
+export const processEditOrganizationForm = async (req, res) => {
   const organizationId = Number(req.params.id);
 
   const results = validationResult(req);
@@ -120,4 +120,4 @@ export async function processEditOrganizationForm(req, res) {
 
   req.flash("success", "Organization updated successfully!");
   res.redirect(`/organization/${organizationId}`);
-}
+};

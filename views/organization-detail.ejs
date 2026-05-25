@@ -2,6 +2,12 @@
 <section>
   <h1><%= heading %></h1>
 
+  <img
+    src="/images/<%= organization.logo_filename %>"
+    alt="<%= organization.organization_name %> logo"
+    class="org-image"
+  />
+
   <p><%= organization.description %></p>
 
   <% if (organization.website_url) { %>

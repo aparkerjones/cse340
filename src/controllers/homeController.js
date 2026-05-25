@@ -1,4 +1,4 @@
-export function getHomePage(_req, res) {
+export const getHomePage = (_req, res) => {
   res.render("index", {
     title: "Home",
     heading: "Welcome to the CSE 340 Service Network!",
@@ -9,4 +9,4 @@ export function getHomePage(_req, res) {
       alt: "Illustration for the CSE 340 Service Network",
     },
   });
-}
+};

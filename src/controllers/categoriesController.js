@@ -6,7 +6,7 @@ import {
 } from "../models/categories.js";
 import { getProjectDetails, getCategoriesByProjectId } from "../models/projects.js";
 
-export async function getCategoriesPage(_req, res) {
+export const getCategoriesPage = async (_req, res) => {
   const categories = await getAllCategories();
 
   res.render("categories", {
@@ -15,9 +15,9 @@ export async function getCategoriesPage(_req, res) {
     description: "Explore service opportunities by category.",
     items: categories,
   });
-}
+};
 
-export async function getCategoryDetailsPage(req, res) {
+export const getCategoryDetailsPage = async (req, res) => {
   const categoryId = Number(req.params.id);
   const category = await getCategoryById(categoryId);
 
@@ -38,9 +38,9 @@ export async function getCategoryDetailsPage(req, res) {
     category,
     projects,
   });
-}
+};
 
-export async function showAssignCategoriesForm(req, res) {
+export const showAssignCategoriesForm = async (req, res) => {
   const projectId = Number(req.params.projectId);
   const project = await getProjectDetails(projectId);
 
@@ -62,9 +62,9 @@ export async function showAssignCategoriesForm(req, res) {
     allCategories,
     assignedCategoryIds: assignedCategories.map((category) => category.category_id),
   });
-}
+};
 
-export async function processAssignCategoriesForm(req, res) {
+export const processAssignCategoriesForm = async (req, res) => {
   const projectId = Number(req.params.projectId);
   const categoryIds = req.body.categoryIds;
 
@@ -77,4 +77,4 @@ export async function processAssignCategoriesForm(req, res) {
   await updateCategoryAssignments(projectId, categoryList);
   req.flash("success", "Project categories updated successfully!");
   res.redirect(`/project/${projectId}`);
-}
+};

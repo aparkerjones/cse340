@@ -74,7 +74,7 @@ export const createProject = async (
   location,
   date,
   organizationId,
-) {
+) => {
   const sql = `
     INSERT INTO projects (organization_id, title, description, location, project_date)
     VALUES ($1, $2, $3, $4, $5)
