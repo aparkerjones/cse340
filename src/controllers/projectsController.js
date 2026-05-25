@@ -1,10 +1,47 @@
 import {
+  createProject,
   getCategoriesByProjectId,
   getProjectDetails,
   getUpcomingProjects,
 } from "../models/projects.js";
+import { getAllOrganizations } from "../models/organizations.js";
+import { body, validationResult } from "express-validator";
 
 const NUMBER_OF_UPCOMING_PROJECTS = 5;
+
+export const projectValidation = [
+  body("title")
+    .trim()
+    .notEmpty()
+    .withMessage("Project title is required")
+    .isLength({ min: 3, max: 120 })
+    .withMessage("Project title must be between 3 and 120 characters")
+    .escape(),
+  body("description")
+    .trim()
+    .notEmpty()
+    .withMessage("Project description is required")
+    .isLength({ max: 1000 })
+    .withMessage("Project description cannot exceed 1000 characters")
+    .escape(),
+  body("location")
+    .trim()
+    .notEmpty()
+    .withMessage("Project location is required")
+    .isLength({ max: 120 })
+    .withMessage("Project location cannot exceed 120 characters")
+    .escape(),
+  body("date")
+    .notEmpty()
+    .withMessage("Project date is required")
+    .isISO8601()
+    .withMessage("Please provide a valid date"),
+  body("organizationId")
+    .notEmpty()
+    .withMessage("Organization is required")
+    .isInt({ min: 1 })
+    .withMessage("Please choose a valid organization"),
+];
 
 export async function getProjectsPage(_req, res) {
   const projects = await getUpcomingProjects(NUMBER_OF_UPCOMING_PROJECTS);
@@ -39,4 +76,28 @@ export async function getProjectDetailsPage(req, res) {
     project,
     categories,
   });
+}
+
+export async function showNewProjectForm(_req, res) {
+  const organizations = await getAllOrganizations();
+
+  res.render("new-project", {
+    title: "Add New Service Project",
+    organizations,
+  });
+}
+
+export async function processNewProjectForm(req, res) {
+  const results = validationResult(req);
+  if (!results.isEmpty()) {
+    results.array().forEach((error) => {
+      req.flash("error", error.msg);
+    });
+    return res.redirect("/new-project");
+  }
+
+  const { organizationId, title, description, location, date } = req.body;
+  await createProject(title, description, location, date, Number(organizationId));
+  req.flash("success", "Service project added successfully!");
+  res.redirect("/projects");
 }

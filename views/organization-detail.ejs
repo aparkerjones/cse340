@@ -13,6 +13,10 @@
     </p>
   <% } %>
 
+  <p>
+    <a class="cta" href="/edit-organization/<%= organization.organization_id %>">Edit Organization</a>
+  </p>
+
   <h2>Service Projects</h2>
   <% if (projects.length === 0) { %>
     <p>No service projects are currently listed for this organization.</p>

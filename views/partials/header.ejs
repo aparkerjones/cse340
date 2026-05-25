@@ -19,3 +19,11 @@
       </div>
     </header>
     <main class="shell page-content">
+      <% const messages = flash(); %>
+      <% Object.keys(messages).forEach((type) => { %>
+        <% if (messages[type].length > 0) { %>
+          <% messages[type].forEach((message) => { %>
+            <div class="alert <%= type %>"><%= message %></div>
+          <% }) %>
+        <% } %>
+      <% }) %>

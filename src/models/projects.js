@@ -63,3 +63,21 @@ export async function getCategoriesByProjectId(projectId) {
   const result = await query(sql, [projectId]);
   return result.rows;
 }
+
+// Create a new service project
+export async function createProject(
+  title,
+  description,
+  location,
+  date,
+  organizationId,
+) {
+  const sql = `
+    INSERT INTO projects (organization_id, title, description, location, project_date)
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING project_id;
+  `;
+
+  const result = await query(sql, [organizationId, title, description, location, date]);
+  return result.rows[0]?.project_id ?? null;
+}

@@ -40,3 +40,28 @@ export async function getProjectsByOrganizationId(organizationId) {
   const result = await query(sql, [organizationId]);
   return result.rows;
 }
+
+// Create a new organization
+export async function createOrganization(name, description, websiteUrl) {
+  const sql = `
+    INSERT INTO organizations (organization_name, description, website_url)
+    VALUES ($1, $2, $3)
+    RETURNING organization_id;
+  `;
+
+  const result = await query(sql, [name, description, websiteUrl]);
+  return result.rows[0]?.organization_id ?? null;
+}
+
+// Update an existing organization
+export async function updateOrganization(id, name, description, websiteUrl) {
+  const sql = `
+    UPDATE organizations
+    SET organization_name = $2,
+        description = $3,
+        website_url = $4
+    WHERE organization_id = $1;
+  `;
+
+  await query(sql, [id, name, description, websiteUrl]);
+}
