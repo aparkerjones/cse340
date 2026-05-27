@@ -118,6 +118,7 @@ export const showEditProjectForm = async (req, res) => {
 
   const organizations = await getAllOrganizations();
 
+  // HTML date inputs expect a YYYY-MM-DD value.
   const projectDate =
     project.project_date instanceof Date
       ? project.project_date.toISOString().slice(0, 10)

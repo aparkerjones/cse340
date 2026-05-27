@@ -115,7 +115,7 @@ export const updateProject = async (
   ]);
 
   if (result.rowCount === 0) {
-    throw new Error("Project update failed: no matching project found.");
+    throw new Error("Unable to update project: project not found.");
   }
 
   return result.rows[0].project_id;
