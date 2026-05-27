@@ -84,3 +84,39 @@ export const createProject = async (
   const result = await query(sql, [organizationId, title, description, location, date]);
   return result.rows[0]?.project_id ?? null;
 };
+
+// Update an existing service project
+export const updateProject = async (
+  projectId,
+  title,
+  description,
+  location,
+  date,
+  organizationId,
+) => {
+  const sql = `
+    UPDATE projects
+    SET organization_id = $2,
+        title = $3,
+        description = $4,
+        location = $5,
+        project_date = $6
+    WHERE project_id = $1
+    RETURNING project_id;
+  `;
+
+  const result = await query(sql, [
+    projectId,
+    organizationId,
+    title,
+    description,
+    location,
+    date,
+  ]);
+
+  if (result.rowCount === 0) {
+    throw new Error("Project update failed: no matching project found.");
+  }
+
+  return result.rows[0].project_id;
+};

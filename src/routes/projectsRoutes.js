@@ -2,8 +2,10 @@ import { Router } from "express";
 import {
   getProjectDetailsPage,
   getProjectsPage,
+  processEditProjectForm,
   processNewProjectForm,
   projectValidation,
+  showEditProjectForm,
   showNewProjectForm,
 } from "../controllers/projectsController.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
@@ -17,6 +19,12 @@ router.post(
   "/new-project",
   projectValidation,
   asyncHandler(processNewProjectForm),
+);
+router.get("/edit-project/:id", asyncHandler(showEditProjectForm));
+router.post(
+  "/edit-project/:id",
+  projectValidation,
+  asyncHandler(processEditProjectForm),
 );
 
 export default router;
