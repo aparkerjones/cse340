@@ -1,6 +1,9 @@
 <%- include("partials/header", { title }) %>
 <section>
   <h1><%= heading %></h1>
+  <p>
+    <a class="cta" href="/edit-category/<%= category.category_id %>">Edit Category</a>
+  </p>
 
   <% if (projects.length === 0) { %>
     <p>No service projects are currently listed in this category.</p>

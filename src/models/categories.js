@@ -24,6 +24,36 @@ export const getCategoryById = async (categoryId) => {
   return result.rows[0] ?? null;
 };
 
+// Create a new category
+export const createCategory = async (categoryName) => {
+  const sql = `
+    INSERT INTO categories (category_name)
+    VALUES ($1)
+    RETURNING category_id;
+  `;
+
+  const result = await query(sql, [categoryName]);
+  return result.rows[0]?.category_id ?? null;
+};
+
+// Update an existing category
+export const updateCategory = async (categoryId, categoryName) => {
+  const sql = `
+    UPDATE categories
+    SET category_name = $2
+    WHERE category_id = $1
+    RETURNING category_id;
+  `;
+
+  const result = await query(sql, [categoryId, categoryName]);
+
+  if (result.rowCount === 0) {
+    throw new Error("Unable to update category: category not found.");
+  }
+
+  return result.rows[0].category_id;
+};
+
 // Retrieve all projects associated with one category
 export const getProjectsByCategoryId = async (categoryId) => {
   const sql = `
