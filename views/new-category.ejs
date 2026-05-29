@@ -1,6 +1,7 @@
 <%- include("partials/header", { title }) %>
 <section>
   <h1>Add New Category</h1>
+  <p>Use a short, clear name so volunteers can find related projects quickly.</p>
 
   <form action="/new-category" method="POST" class="form-card">
     <div class="form-group">
@@ -11,6 +12,7 @@
         type="text"
         required
         maxlength="100"
+        placeholder="Example: Youth Mentoring"
       />
     </div>
 

@@ -9,6 +9,38 @@ import {
 import { getProjectDetails, getCategoriesByProjectId } from "../models/projects.js";
 import { body, validationResult } from "express-validator";
 
+const flashValidationErrors = (req, results) => {
+  if (results.isEmpty()) {
+    return false;
+  }
+
+  for (const error of results.array()) {
+    req.flash("error", error.msg);
+  }
+
+  return true;
+};
+
+const renderNotFound = (res, heading, message) => {
+  res.status(404).render("404", {
+    title: "Not Found",
+    heading,
+    message,
+  });
+};
+
+const normalizeCategoryIds = (value) => {
+  if (Array.isArray(value)) {
+    return value;
+  }
+
+  if (value) {
+    return [value];
+  }
+
+  return [];
+};
+
 export const categoryValidation = [
   body("name")
     .trim()
@@ -35,11 +67,11 @@ export const getCategoryDetailsPage = async (req, res) => {
   const category = await getCategoryById(categoryId);
 
   if (!category) {
-    res.status(404).render("404", {
-      title: "Not Found",
-      heading: "Category Not Found",
-      message: "We could not find that service project category.",
-    });
+    renderNotFound(
+      res,
+      "Category Not Found",
+      "We could not find that service project category.",
+    );
     return;
   }
 
@@ -61,10 +93,7 @@ export const showNewCategoryForm = async (_req, res) => {
 
 export const processNewCategoryForm = async (req, res) => {
   const results = validationResult(req);
-  if (!results.isEmpty()) {
-    results.array().forEach((error) => {
-      req.flash("error", error.msg);
-    });
+  if (flashValidationErrors(req, results)) {
     return res.redirect("/new-category");
   }
 
@@ -89,11 +118,11 @@ export const showEditCategoryForm = async (req, res) => {
   const category = await getCategoryById(categoryId);
 
   if (!category) {
-    res.status(404).render("404", {
-      title: "Not Found",
-      heading: "Category Not Found",
-      message: "We could not find that service project category.",
-    });
+    renderNotFound(
+      res,
+      "Category Not Found",
+      "We could not find that service project category.",
+    );
     return;
   }
 
@@ -107,10 +136,7 @@ export const processEditCategoryForm = async (req, res) => {
   const categoryId = Number(req.params.id);
   const results = validationResult(req);
 
-  if (!results.isEmpty()) {
-    results.array().forEach((error) => {
-      req.flash("error", error.msg);
-    });
+  if (flashValidationErrors(req, results)) {
     return res.redirect(`/edit-category/${categoryId}`);
   }
 
@@ -135,11 +161,7 @@ export const showAssignCategoriesForm = async (req, res) => {
   const project = await getProjectDetails(projectId);
 
   if (!project) {
-    res.status(404).render("404", {
-      title: "Not Found",
-      heading: "Project Not Found",
-      message: "We could not find that service project.",
-    });
+    renderNotFound(res, "Project Not Found", "We could not find that service project.");
     return;
   }
 
@@ -156,13 +178,7 @@ export const showAssignCategoriesForm = async (req, res) => {
 
 export const processAssignCategoriesForm = async (req, res) => {
   const projectId = Number(req.params.projectId);
-  const categoryIds = req.body.categoryIds;
-
-  const categoryList = Array.isArray(categoryIds)
-    ? categoryIds
-    : categoryIds
-      ? [categoryIds]
-      : [];
+  const categoryList = normalizeCategoryIds(req.body.categoryIds);
 
   await updateCategoryAssignments(projectId, categoryList);
   req.flash("success", "Project categories updated successfully!");
