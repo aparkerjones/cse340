@@ -7,6 +7,26 @@ import {
 } from "../models/organizations.js";
 import { body, validationResult } from "express-validator";
 
+const flashValidationErrors = (req, results) => {
+  if (results.isEmpty()) {
+    return false;
+  }
+
+  for (const error of results.array()) {
+    req.flash("error", error.msg);
+  }
+
+  return true;
+};
+
+const renderOrganizationNotFound = (res) => {
+  res.status(404).render("404", {
+    title: "Not Found",
+    heading: "Organization Not Found",
+    message: "We could not find that organization.",
+  });
+};
+
 export const organizationValidation = [
   body("name")
     .trim()
@@ -46,11 +66,7 @@ export const getOrganizationDetailsPage = async (req, res) => {
   const organization = await getOrganizationById(organizationId);
 
   if (!organization) {
-    res.status(404).render("404", {
-      title: "Not Found",
-      heading: "Organization Not Found",
-      message: "We could not find that organization.",
-    });
+    renderOrganizationNotFound(res);
     return;
   }
 
@@ -71,11 +87,8 @@ export const showNewOrganizationForm = async (_req, res) => {
 };
 
 export const processNewOrganizationForm = async (req, res) => {
-  const results = validationResult(req);
-  if (!results.isEmpty()) {
-    results.array().forEach((error) => {
-      req.flash("error", error.msg);
-    });
+  const validationResults = validationResult(req);
+  if (flashValidationErrors(req, validationResults)) {
     return res.redirect("/new-organization");
   }
 
@@ -90,11 +103,7 @@ export const showEditOrganizationForm = async (req, res) => {
   const organizationDetails = await getOrganizationById(organizationId);
 
   if (!organizationDetails) {
-    res.status(404).render("404", {
-      title: "Not Found",
-      heading: "Organization Not Found",
-      message: "We could not find that organization.",
-    });
+    renderOrganizationNotFound(res);
     return;
   }
 
@@ -107,11 +116,8 @@ export const showEditOrganizationForm = async (req, res) => {
 export const processEditOrganizationForm = async (req, res) => {
   const organizationId = Number(req.params.id);
 
-  const results = validationResult(req);
-  if (!results.isEmpty()) {
-    results.array().forEach((error) => {
-      req.flash("error", error.msg);
-    });
+  const validationResults = validationResult(req);
+  if (flashValidationErrors(req, validationResults)) {
     return res.redirect(`/edit-organization/${organizationId}`);
   }
 

@@ -10,6 +10,26 @@ import { body, validationResult } from "express-validator";
 
 const NUMBER_OF_UPCOMING_PROJECTS = 5;
 
+const flashValidationErrors = (req, results) => {
+  if (results.isEmpty()) {
+    return false;
+  }
+
+  for (const error of results.array()) {
+    req.flash("error", error.msg);
+  }
+
+  return true;
+};
+
+const renderProjectNotFound = (res) => {
+  res.status(404).render("404", {
+    title: "Not Found",
+    heading: "Project Not Found",
+    message: "We could not find that service project.",
+  });
+};
+
 export const projectValidation = [
   body("title")
     .trim()
@@ -61,11 +81,7 @@ export const getProjectDetailsPage = async (req, res) => {
   const project = await getProjectDetails(projectId);
 
   if (!project) {
-    res.status(404).render("404", {
-      title: "Not Found",
-      heading: "Project Not Found",
-      message: "We could not find that service project.",
-    });
+    renderProjectNotFound(res);
     return;
   }
 
@@ -89,11 +105,8 @@ export const showNewProjectForm = async (_req, res) => {
 };
 
 export const processNewProjectForm = async (req, res) => {
-  const results = validationResult(req);
-  if (!results.isEmpty()) {
-    results.array().forEach((error) => {
-      req.flash("error", error.msg);
-    });
+  const validationResults = validationResult(req);
+  if (flashValidationErrors(req, validationResults)) {
     return res.redirect("/new-project");
   }
 
@@ -108,11 +121,7 @@ export const showEditProjectForm = async (req, res) => {
   const project = await getProjectDetails(projectId);
 
   if (!project) {
-    res.status(404).render("404", {
-      title: "Not Found",
-      heading: "Project Not Found",
-      message: "We could not find that service project.",
-    });
+    renderProjectNotFound(res);
     return;
   }
 
@@ -135,11 +144,8 @@ export const showEditProjectForm = async (req, res) => {
 export const processEditProjectForm = async (req, res) => {
   const projectId = Number(req.params.id);
 
-  const results = validationResult(req);
-  if (!results.isEmpty()) {
-    results.array().forEach((error) => {
-      req.flash("error", error.msg);
-    });
+  const validationResults = validationResult(req);
+  if (flashValidationErrors(req, validationResults)) {
     return res.redirect(`/edit-project/${projectId}`);
   }
 
