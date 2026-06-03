@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS organizations;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS roles;
 
+-- RBAC tables
 CREATE TABLE roles (
   role_id SERIAL PRIMARY KEY,
   role_name VARCHAR(50) UNIQUE NOT NULL,
@@ -20,6 +21,7 @@ CREATE TABLE users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Core service network tables
 CREATE TABLE organizations (
   organization_id SERIAL PRIMARY KEY,
   organization_name VARCHAR(100) NOT NULL UNIQUE,
@@ -49,6 +51,7 @@ CREATE TABLE project_categories (
   PRIMARY KEY (project_id, category_id)
 );
 
+-- Seed organizations and role metadata
 INSERT INTO organizations (organization_id, organization_name, logo_filename, contact_email, description, website_url)
 VALUES
   (1, 'BrightFuture Builders', 'brightfuture-logo.png', 'info@brightfuturebuilders.org', 'A nonprofit focused on improving community infrastructure through sustainable construction projects.', NULL),
@@ -60,6 +63,7 @@ VALUES
   (1, 'user', 'Standard user with basic access'),
   (2, 'admin', 'Administrator with full system access');
 
+-- Seed sample project and category data
 INSERT INTO projects (project_id, organization_id, title, description, location, project_date)
 VALUES
   (1, 1, 'Neighborhood Repair Blitz', 'Assist with minor home repairs for longtime residents.', 'Riverside District', '2026-06-06'),

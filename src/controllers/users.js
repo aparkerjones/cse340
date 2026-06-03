@@ -4,6 +4,7 @@ import { authenticateUser, createUser } from "../models/users.js";
 
 const SALT_ROUNDS = 10;
 
+// Keep flash handling consistent across auth forms.
 const flashValidationErrors = (req, results) => {
   if (results.isEmpty()) {
     return false;
@@ -62,15 +63,16 @@ export const processUserRegistrationForm = async (req, res) => {
   }
 
   const { name, email, password } = req.body;
+  // Hash passwords before saving so plaintext is never stored.
   const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
 
   try {
     await createUser(name, email, passwordHash);
-    req.flash("success", "Registration successful. You can now log in.");
+    req.flash("success", "Account created. You can log in now.");
     return res.redirect("/login");
   } catch (error) {
     if (error?.code === "23505") {
-      req.flash("error", "That email is already registered.");
+      req.flash("error", "That email is already in use. Try logging in instead.");
       return res.redirect("/register");
     }
 
@@ -99,8 +101,13 @@ export const processLoginForm = async (req, res) => {
   }
 
   req.session.user = user;
-  req.flash("success", "Login successful.");
-  console.log("User logged in:", user);
+  req.flash("success", `Welcome back, ${user.name}!`);
+
+  // Keep debug logging useful without dumping full user/session details.
+  if (process.env.NODE_ENV !== "production") {
+    console.log("User logged in:", { userId: user.user_id, email: user.email });
+  }
+
   res.redirect("/dashboard");
 };
 
@@ -115,7 +122,7 @@ export const processLogout = (req, res) => {
 
 export const requireLogin = (req, res, next) => {
   if (!req.session.user) {
-    req.flash("error", "Please log in to access that page.");
+    req.flash("error", "Please log in to continue.");
     res.redirect("/login");
     return;
   }

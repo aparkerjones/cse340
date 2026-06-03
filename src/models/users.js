@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import { query } from "../database/index.js";
 
+// New accounts default to the standard user role.
 export const createUser = async (name, email, passwordHash) => {
   const sql = `
     INSERT INTO users (name, email, password_hash, role_id)
@@ -17,6 +18,7 @@ export const createUser = async (name, email, passwordHash) => {
   return result.rows[0] ?? null;
 };
 
+// Retrieve auth fields plus role_name for session storage.
 const findUserByEmail = async (email) => {
   const sql = `
     SELECT
@@ -56,6 +58,7 @@ export const authenticateUser = async (email, password) => {
     return null;
   }
 
+  // Never include password_hash in session-bound user objects.
   const { password_hash: _passwordHash, ...safeUser } = user;
   return safeUser;
 };
