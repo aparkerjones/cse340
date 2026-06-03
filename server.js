@@ -7,6 +7,7 @@ import homeRoutes from "./src/routes/homeRoutes.js";
 import organizationsRoutes from "./src/routes/organizationsRoutes.js";
 import projectsRoutes from "./src/routes/projectsRoutes.js";
 import categoriesRoutes from "./src/routes/categoriesRoutes.js";
+import usersRoutes from "./src/routes/usersRoutes.js";
 import flash from "./src/middleware/flash.js";
 
 dotenv.config();
@@ -39,6 +40,7 @@ app.use((req, res, next) => {
 });
 
 app.use(homeRoutes);
+app.use(usersRoutes);
 app.use(organizationsRoutes);
 app.use(projectsRoutes);
 app.use(categoriesRoutes);

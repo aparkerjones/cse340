@@ -9,5 +9,8 @@
     class="home-image"
   />
   <a class="cta" href="/projects">Browse Service Projects</a>
+  <% if (isLoggedIn) { %>
+    <a class="cta" href="/dashboard">My Dashboard</a>
+  <% } %>
 </section>
 <%- include("partials/footer") %>
