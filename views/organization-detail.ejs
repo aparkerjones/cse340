@@ -19,9 +19,11 @@
     </p>
   <% } %>
 
-  <p>
-    <a class="cta" href="/edit-organization/<%= organization.organization_id %>">Edit Organization</a>
-  </p>
+  <% if (user && user.role_name === "admin") { %>
+    <p>
+      <a class="cta" href="/edit-organization/<%= organization.organization_id %>">Edit Organization</a>
+    </p>
+  <% } %>
 
   <h2>Service Projects</h2>
   <% if (projects.length === 0) { %>

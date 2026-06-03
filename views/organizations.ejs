@@ -21,6 +21,8 @@
       </article>
     <% }) %>
   </div>
-  <p><a class="cta" href="/new-organization">Add a new organization</a></p>
+  <% if (user && user.role_name === "admin") { %>
+    <p><a class="cta" href="/new-organization">Add a new organization</a></p>
+  <% } %>
 </section>
 <%- include("partials/footer") %>

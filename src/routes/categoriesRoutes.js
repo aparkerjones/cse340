@@ -10,30 +10,39 @@ import {
   showAssignCategoriesForm,
   showNewCategoryForm,
 } from "../controllers/categoriesController.js";
+import requireRole from "../middleware/requireRole.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 const router = Router();
 
 router.get("/categories", asyncHandler(getCategoriesPage));
 router.get("/category/:id", asyncHandler(getCategoryDetailsPage));
-router.get("/new-category", asyncHandler(showNewCategoryForm));
+router.get("/new-category", requireRole("admin"), asyncHandler(showNewCategoryForm));
 router.post(
   "/new-category",
+  requireRole("admin"),
   categoryValidation,
   asyncHandler(processNewCategoryForm),
 );
-router.get("/edit-category/:id", asyncHandler(showEditCategoryForm));
+router.get(
+  "/edit-category/:id",
+  requireRole("admin"),
+  asyncHandler(showEditCategoryForm),
+);
 router.post(
   "/edit-category/:id",
+  requireRole("admin"),
   categoryValidation,
   asyncHandler(processEditCategoryForm),
 );
 router.get(
   "/project/:projectId/assign-categories",
+  requireRole("admin"),
   asyncHandler(showAssignCategoriesForm),
 );
 router.post(
   "/project/:projectId/assign-categories",
+  requireRole("admin"),
   asyncHandler(processAssignCategoriesForm),
 );
 

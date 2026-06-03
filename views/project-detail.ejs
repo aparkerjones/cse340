@@ -16,10 +16,12 @@
     <strong>Partner Organization:</strong>
     <a href="/organization/<%= project.organization_id %>"><%= project.organization_name %></a>
   </p>
-  <p>
-    <a class="cta" href="/project/<%= project.project_id %>/assign-categories">Edit Categories</a>
-    <a class="cta" href="/edit-project/<%= project.project_id %>">Edit Project</a>
-  </p>
+  <% if (user && user.role_name === "admin") { %>
+    <p>
+      <a class="cta" href="/project/<%= project.project_id %>/assign-categories">Edit Categories</a>
+      <a class="cta" href="/edit-project/<%= project.project_id %>">Edit Project</a>
+    </p>
+  <% } %>
 
   <h2>Categories</h2>
   <% if (categories.length === 0) { %>
