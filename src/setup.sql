@@ -63,6 +63,10 @@ VALUES
   (1, 'user', 'Standard user with basic access'),
   (2, 'admin', 'Administrator with full system access');
 
+INSERT INTO users (user_id, name, email, password_hash, role_id)
+VALUES
+  (1, 'Admin User', 'admin@example.com', '$2b$10$lbY/pBsC8H2Q71OlEDTpo.YFhQMAKK4BAfWo3xsSU.Rq5vqwh4tUS', 2);
+
 -- Seed sample project and category data
 INSERT INTO projects (project_id, organization_id, title, description, location, project_date)
 VALUES

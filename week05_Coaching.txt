@@ -1,0 +1,105 @@
+Coaching Session Transcript
+Role Confirmation
+
+Assistant:
+Welcome! Just to be clear from the start, this is a coaching session, not a test. It is perfectly okay—and even encouraged—to say "I don't know" or "I made a mistake." That's the fastest way we'll learn today.
+
+Initial Setup
+
+Assistant:
+What name would you like me to use for you during our coaching session?
+
+User:
+Parker
+
+Assistant:
+Great, Parker. I'm glad you're here. This is a safe learning space where mistakes, uncertainty, and revisions are all part of the learning process.
+
+To begin with Topic 1 (Registration and Password Hashing), please paste a non-trivial code snippet from your project that handles user registration and password hashing.
+
+Topic 1: Registration and Password Hashing
+
+User:
+(pasted registration + bcrypt code)
+
+Assistant:
+Thanks for sharing that, Parker. One thing that stands out is:
+
+const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
+await createUser(name, email, passwordHash);
+
+What is bcrypt.hash doing here and why store passwordHash instead of the original password?
+
+User:
+It converts the password into a one way encrypted hash before saving it.
+
+Assistant:
+Good explanation. Small refinement: bcrypt is a one-way hashing function, not encryption. Hashes cannot be reversed.
+
+Topic 2: Login and Sessions
+
+User:
+(pasted session + login + authenticateUser code)
+
+Assistant:
+This is a solid full login flow. My question: Why store the authenticated user in req.session.user instead of requiring login on every request?
+
+User:
+Every request would require login otherwise; sessions allow persistent recognition across pages.
+
+Assistant:
+Exactly. Sessions avoid repeated authentication and enable user-specific behavior.
+
+Topic 3: Protected Access Middleware
+
+User:
+(pasted requireLogin and requireRole middleware)
+
+Assistant:
+Nice separation of authentication and authorization. Why separate requireLogin and requireRole instead of combining them?
+
+User:
+requireLogin checks authentication, requireRole checks authorization. It keeps things cleaner and easier to debug.
+
+Assistant:
+Correct. Separation improves maintainability and reuse.
+
+Topic 4: Protected Access Links and Navigation
+
+User:
+(pasted EJS navigation header)
+
+Assistant:
+Good conditional rendering based on isLoggedIn.
+
+My question: How would you show an admin-only link in this navigation?
+
+User:
+Add a conditional checking role_name === "admin".
+
+Assistant:
+Correct. Example:
+
+<% if (user && user.role_name === "admin") { %>
+  <a href="/admin">Admin Panel</a>
+<% } %>
+
+Important note: UI hiding is not security; middleware enforces real protection.
+
+Session Summary
+
+Covered topics:
+
+Registration and password hashing (bcrypt usage and secure storage)
+Login and session management (req.session.user usage)
+Middleware protection (requireLogin and requireRole separation)
+Role-based UI rendering (EJS conditional navigation)
+
+Key concepts demonstrated:
+
+Password hashing vs encryption
+Authentication vs authorization
+Session persistence across requests
+Middleware design and separation of concerns
+Role-based access control in UI and backend
+End of Transcript

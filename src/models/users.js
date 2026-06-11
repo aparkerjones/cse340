@@ -18,6 +18,22 @@ export const createUser = async (name, email, passwordHash) => {
   return result.rows[0] ?? null;
 };
 
+export const getAllUsers = async () => {
+  const sql = `
+    SELECT
+      u.user_id,
+      u.name,
+      u.email,
+      r.role_name
+    FROM users u
+    JOIN roles r ON u.role_id = r.role_id
+    ORDER BY u.name ASC;
+  `;
+
+  const result = await query(sql);
+  return result.rows;
+};
+
 // Retrieve auth fields plus role_name for session storage.
 const findUserByEmail = async (email) => {
   const sql = `

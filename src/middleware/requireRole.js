@@ -7,7 +7,12 @@ const requireRole = (role) => {
     }
 
     req.flash("error", "You do not have permission to view that page.");
-    res.redirect("/");
+    if (req.session.user) {
+      res.redirect("/dashboard");
+      return;
+    }
+
+    res.redirect("/login");
   };
 };
 
