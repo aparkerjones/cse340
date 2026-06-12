@@ -120,3 +120,50 @@ export const updateProject = async (
 
   return result.rows[0].project_id;
 };
+
+// Add a user as a volunteer for a project
+export const addVolunteer = async (userId, projectId) => {
+  const sql = `
+    INSERT INTO project_volunteers (user_id, project_id)
+    VALUES ($1, $2)
+    ON CONFLICT DO NOTHING;
+  `;
+  await query(sql, [userId, projectId]);
+};
+
+// Remove a user as a volunteer from a project
+export const removeVolunteer = async (userId, projectId) => {
+  const sql = `
+    DELETE FROM project_volunteers
+    WHERE user_id = $1 AND project_id = $2;
+  `;
+  await query(sql, [userId, projectId]);
+};
+
+// Check if a user is already volunteering for a project
+export const isVolunteering = async (userId, projectId) => {
+  const sql = `
+    SELECT 1 FROM project_volunteers
+    WHERE user_id = $1 AND project_id = $2;
+  `;
+  const result = await query(sql, [userId, projectId]);
+  return result.rowCount > 0;
+};
+
+// Get all projects a user has signed up to volunteer for
+export const getVolunteerProjectsByUserId = async (userId) => {
+  const sql = `
+    SELECT
+      p.project_id,
+      p.title,
+      p.description,
+      p.location,
+      p.project_date
+    FROM projects p
+    JOIN project_volunteers pv ON p.project_id = pv.project_id
+    WHERE pv.user_id = $1
+    ORDER BY p.project_date, p.title;
+  `;
+  const result = await query(sql, [userId]);
+  return result.rows;
+};

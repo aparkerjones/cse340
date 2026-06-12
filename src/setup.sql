@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS project_volunteers;
 DROP TABLE IF EXISTS project_categories;
 DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS projects;
@@ -49,6 +50,12 @@ CREATE TABLE project_categories (
   project_id INTEGER NOT NULL REFERENCES projects (project_id) ON DELETE CASCADE,
   category_id INTEGER NOT NULL REFERENCES categories (category_id) ON DELETE CASCADE,
   PRIMARY KEY (project_id, category_id)
+);
+
+CREATE TABLE project_volunteers (
+  user_id    INTEGER NOT NULL REFERENCES users (user_id)    ON DELETE CASCADE,
+  project_id INTEGER NOT NULL REFERENCES projects (project_id) ON DELETE CASCADE,
+  PRIMARY KEY (user_id, project_id)
 );
 
 -- Seed organizations and role metadata

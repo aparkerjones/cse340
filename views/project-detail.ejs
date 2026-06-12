@@ -23,6 +23,19 @@
     </p>
   <% } %>
 
+  <% if (user) { %>
+    <% if (volunteering) { %>
+      <p>You are volunteering for this project.</p>
+      <form method="POST" action="/project/<%= project.project_id %>/unvolunteer">
+        <button type="submit" class="cta">Remove myself as a volunteer</button>
+      </form>
+    <% } else { %>
+      <form method="POST" action="/project/<%= project.project_id %>/volunteer">
+        <button type="submit" class="cta">Volunteer for this project</button>
+      </form>
+    <% } %>
+  <% } %>
+
   <h2>Categories</h2>
   <% if (categories.length === 0) { %>
     <p>This project currently has no categories assigned.</p>
